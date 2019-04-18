@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tip Calc</title>
+    <link rel="shortcut icon" type="image/png" href="wyncode-icon.jpg">
+    <style>
+        *{
+            font-family:Impact;
+        }
+
+    .hidden{
+        opacity:0;
+        visibility: hidden;
+    }
+    body{
+        background-color: lightsalmon;
+        text-align: center;
+    }
+    </style>
+</head>
+<body>
+    <h1>Splitter.com</h1>
+    <hr>
+    <form action='#'>
+        <div>
+            <label for='bill'>How much was the check?
+            $ <input id='bill' type='number' min='0' value='0'>
+        </div>
+        <div>
+            <label for='percent'>How much do you want to tip?
+            <input id='percent' type='number' min='0' value='15'> %
+        </div>
+        <div>
+            <label for='party'>How much do you want to tip?
+            <select id='party'>        
+        <option value='1'>1</option>
+        <option value='2'>2</option>
+        <option value='3'>3</option>
+        <option value='4'>4</option>
+        <option value='5'>5</option>
+        <option value='6'>6</option>
+        <option value='7'>7</option>
+        <option value='8'>8</option>
+        <option value='9'>9</option>
+        <option value='10'>10</option>
+         </select>
+        </div>
+        <button type='submit'>Calculate
+        </button>
+    </form>
+    <hr>
+    <div id='answer' class='hidden'>
+        <h3>Tip Amount: $<span id='tip'>0.00</span></h3>
+        <h3>Total Amount: $<span id='total'>0.00</span></h3>
+        <h3>Your Share: $<span id='yourshare'>0.00</span></h3>
+    </div>
+    <script>
+        const body = document.querySelectorAll('Body')
+        const bill = document.querySelector('#bill')
+        const percent = document.querySelector('#percent')
+        const partysize = document.querySelector('#party')
+
+        const tipText = document.querySelector('#tip')
+        const totalText = document.querySelector('#total')
+        const yourShareText = document.querySelector('#yourshare')
+
+        const form = document.querySelector('form')
+
+
+        function calc(event)
+        {
+            event.preventDefault()
+            const billAmount = Number(bill.value)
+            const tipPercent = Number(percent.value)
+            const partySize = Number(partysize.value)
+
+            const tipAmount = (tipPercent/100) * billAmount
+            const totalAmount = billAmount + tipAmount
+            const yourShare = totalAmount/partySize
+
+            tipText.textContent = tipAmount.toFixed(2)
+            totalText.textContent = totalAmount.toFixed(2)
+            yourShareText.textContent = yourShare.toFixed(2)
+
+            answer.classList.remove('hidden')
+        }
+
+        function random_rgba() {
+        var o = Math.round, r = Math.random, s = 255;
+        return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' 
+        + o(r()*s) + ',' + r().toFixed(1) + ')';
+        }
+
+        function handleBodyClick(){
+            document.body.style.backgroundColor = random_rgba()
+        }
+
+         body.forEach(btn=> btn.addEventListener('click', handleBodyClick))
+         form.addEventListener('submit', calc)
+    </script>
+</body>
+</html>
